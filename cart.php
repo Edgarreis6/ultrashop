@@ -51,20 +51,12 @@
 	</style>
 
     <script>   
-        document.addEventListener("DOMContentLoaded", ()=>
+        document.addEventListener("DOMContentLoaded", ()=> 
         {
             const removeButtons = document.querySelectorAll(".remove");
             const quantityInputs = document.querySelectorAll(".quantity");
 
-            function recalculateTotals(element) {
-
-                const tr =  element.parentNode.parentNode;
-                const price = tr.dataset.price;
-                const quantity = element.value; 
-                
-                tr.querySelector(".subtotal").textContent = price * quantity;
-                
-
+            function recalculateTotal(){
                 let total = 0;
                for (let subtotal of document.querySelectorAll(".subtotal")) {
 
@@ -74,7 +66,24 @@
                document.querySelector(".total").textContent = total;
 
             }
+           
+           
+           
+           
+           
+            function recalculateSubTotals(element) {
 
+                const tr =  element.parentNode.parentNode;
+                const price = tr.dataset.price;
+                const quantity = element.value; 
+                
+                tr.querySelector(".subtotal").textContent = price * quantity;
+
+                recalculateTotal()
+                
+            }
+            
+           
 
             for(let button of removeButtons) {
                 button.addEventListener("click", () => {
@@ -93,6 +102,8 @@
                         if(parsedResponse.status == "OK") {
                            
                              button.parentNode.parentNode.remove();
+
+                             recalculateTotal();
                         }
                     });
             
@@ -118,7 +129,7 @@
                     .then( parsedResponse => {
                         if(parsedResponse.status == "OK") {
                            
-                           recalculateTotals (input);
+                           recalculateSubTotals (input);
                         }
                     });
                     
