@@ -63,9 +63,16 @@
                 const quantity = element.value; 
                 
                 tr.querySelector(".subtotal").textContent = price * quantity;
+                
 
+                let total = 0;
+               for (let subtotal of document.querySelectorAll(".subtotal")) {
 
-                console.log(price, quantity)
+                    total = total + Number(subtotal.textContent);
+                   
+               }
+               document.querySelector(".total").textContent = total;
+
             }
 
 
